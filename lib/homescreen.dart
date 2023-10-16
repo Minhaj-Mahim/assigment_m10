@@ -82,8 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   if (_formkey.currentState!.validate()) {
-                    Item newitem = Item(titleCon.text, description.text);
-                    items.add(newitem);
+                    Item newItem = Item(titleCon.text, description.text);
+                    items.add(newItem);
                     titleCon.clear();
                     description.clear();
                     setState(() {});
@@ -110,11 +110,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder: (context) {
                               return buildAlertDialog(context, index);
                             }
-                            );
+                        );
                       },
                       tileColor: Color(0xFFe0e0e0),
                       leading: CircleAvatar(
-                          backgroundColor: Colors.red,
+                        backgroundColor: Colors.red,
                       ),
                       title: Text('${items[index].title}'),
                       subtitle: Text('${items[index].descrip}'),
@@ -149,63 +149,72 @@ class _HomeScreenState extends State<HomeScreen> {
                   GestureDetector(
                       onTap: () {
                         showModalBottomSheet(
+                            isScrollControlled: true,
                             context: context,
                             builder: (context) {
-                              return Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: TextFormField(
-                                      controller: titleCon
-                                        ..text = items[index].title,
-                                      decoration: InputDecoration(
-                                          hintText: '',
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                              BorderRadius.circular(10))),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        bottom: 8.0, left: 8, right: 8
-                                    ),
-                                    child: TextFormField(
-                                      controller: description
-                                        ..text = items[index].descrip,
-                                      decoration: InputDecoration(
-                                          hintText: '',
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                              BorderRadius.circular(10)
-                                          )
+
+                              return SingleChildScrollView(
+                                child:
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: TextFormField(
+                                          controller: titleCon
+                                            ..text = items[index].title,
+                                          decoration: InputDecoration(
+                                              hintText: '',
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                  BorderRadius.circular(10))),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        int itemNumber =
-                                        items.indexOf(items[index]);
-                                        if (itemNumber != -1) {
-                                          items[index] = Item(
-                                              titleCon.text, description.text
-                                          );
-                                          titleCon.clear();
-                                          description.clear();
-                                          Navigator.of(context).pop();
-                                          setState(() {});
-                                          Navigator.of(context).pop();
-                                        }
-                                      },
-                                      child: Text(
-                                        'Edit Done',
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            bottom: 8.0, left: 8, right: 8
+                                        ),
+                                        child: TextFormField(
+                                          controller: description
+                                            ..text = items[index].descrip,
+                                          decoration: InputDecoration(
+                                              hintText: '',
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                  BorderRadius.circular(10)
+                                              )
+                                          ),
+                                        ),
                                       ),
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.red,
-                                          minimumSize: Size(90, 40)),
-                                    ),
+                                      Center(
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            int itemNumber =
+                                            items.indexOf(items[index]);
+                                            if (itemNumber != -1) {
+                                              items[index] = Item(
+                                                  titleCon.text, description.text
+                                              );
+                                              titleCon.clear();
+                                              description.clear();
+                                              Navigator.of(context).pop();
+                                              setState(() {});
+                                              Navigator.of(context).pop();
+                                            }
+                                          },
+                                          child: Text(
+                                            'Edit Done',
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.red,
+                                              minimumSize: Size(90, 40)),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               );
                             });
                       },
@@ -229,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ],
-        ),
+        )
       ],
     );
   }
